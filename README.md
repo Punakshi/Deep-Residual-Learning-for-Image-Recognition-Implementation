@@ -15,33 +15,31 @@ Insights:
 3.A standard two layer module is as below:
 
 def Unit(x,filters):
-
-    out = BatchNormalization()(x)
-    out = Activation("relu")(out)
-    out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
-
-    out = BatchNormalization()(out)
-    out = Activation("relu")(out)
-    out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
-
-    return out
-    
-    While, a resnet module is:
-    
+  out = BatchNormalization()(x)
+  out = Activation("relu")(out)
+  out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
+  
+  out = BatchNormalization()(out)
+  out = Activation("relu")(out)
+  out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
+  
+  return out
+  
+    Whereas a resNet module is:  
     
 def Unit(x,filters):
-    res = x
-    out = BatchNormalization()(x)
-    out = Activation("relu")(out)
-    out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
-
-    out = BatchNormalization()(out)
-    out = Activation("relu")(out)
-    out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
-
-    out = keras.layers.add([res,out])
-
-    return out
+  res = x
+  out = BatchNormalization()(x)
+  out = Activation("relu")(out)
+  out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
+    
+  out = BatchNormalization()(out)
+  out = Activation("relu")(out)
+  out = Conv2D(filters=filters, kernel_size=[3, 3], strides=[1, 1], padding="same")(out)
+  
+  out = keras.layers.add([res,out])
+  
+  return out
 
 Firstly store a reference “res” to the original input, and after passing through the batchnorm-relu-conv layers,  add the output to the residual.This part corresponds to the equation y = f(x) + x instead of standard network y = f(x) 
 
